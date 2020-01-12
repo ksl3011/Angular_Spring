@@ -1,3 +1,11 @@
 # Angular_Spring
 
-Angular.js 를 정리해놓고 있습니다
+Angular.js 정리
+
+* app
+* model
+* controller
+* ...
+.
+.
+.
