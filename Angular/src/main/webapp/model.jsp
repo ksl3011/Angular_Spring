@@ -13,9 +13,10 @@
 	<fieldset>
 		<legend>model</legend>
 	</fieldset>
+
+	<br>초기화 ng-init=""
+	<br>　　　 ng-init="name='xxx';id='xxx'"
 	
-		
-		
 	<div ng-init="txt='입력'">
 		<input ng-model="txt" placeholder="{{txt}}">
 		<p>{{txt}}</p>
