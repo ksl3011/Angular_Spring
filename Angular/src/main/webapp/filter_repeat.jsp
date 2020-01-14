@@ -12,6 +12,8 @@
 
 	<fieldset>
 		<legend>filter_repeat</legend>
+		<p>리스트 내부 filter , 리스트 내부 custom filter, repeat</p>
+		<hr>
 		<p>ng-repeat="a in c.data | limitTo: 2:1"</p>
 		<p>a는 임의지정, c.data는 컨트롤러안 데이터</p>
 		<p>limitTo: 출력갯수:시작인덱스</p>
