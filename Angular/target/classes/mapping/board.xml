@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ehr.board">
+
+	<sql id="search">
+		<where>
+			<choose>
+				<when test='searchWord_a != null and searchWord_a != ""'>
+					TITLE LIKE CONCAT('%', #{searchWord_a}, '%')
+					AND <![CDATA[ (@rownum:=0)=0 ]]>
+				</when>
+				<otherwise>
+					<![CDATA[ (@rownum:=0)=0 ]]>
+				</otherwise>
+			</choose>				
+		</where>
+	</sql>
+
+	<insert id="save" parameterType="BoardVO">
+		INSERT INTO BOARD (
+			TITLE
+			,PW
+			,USER_ID
+			,REG_DT
+			,FILE_CODE
+			,CONTENTS
+		) VALUES (
+			#{title}
+			,#{pw}
+			,#{userId}
+			,now()
+			,#{fileCode}
+			,#{contents}
+		)
+		<selectKey resultType="int" keyProperty="postNum" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey> 
+	</insert>
+
+	<select id="retrieve" parameterType="SearchVO" resultType="BoardVO">	
+			SELECT T.TITLE AS title
+			  ,T.POST_NUM AS postNum
+			  ,T.USER_ID AS userId
+			  ,T.REG_DT AS regDt
+			  ,T.CONTENTS AS contents
+			  ,T.FILE_CODE AS fileCode
+              ,T.TOTAL AS total
+			FROM(
+				SELECT <![CDATA[ A.*, B.*, @rownum:=@rownum+1 AS ROWNUM ]]>
+				FROM BOARD A, (SELECT COUNT(*) AS TOTAL FROM BOARD)B
+				<include refid="search"/>
+				ORDER BY A.POST_NUM DESC
+			    )T
+			WHERE <![CDATA[ CEIL(T.ROWNUM/#{pageSize})=#{pageNum} ]]>
+	</select>
+
+	<select id="selectOne" parameterType="BoardVO" resultType="BoardVO">	
+		SELECT TITLE AS title
+			  ,PW AS pw
+			  ,POST_NUM AS postNum
+			  ,USER_ID AS userId
+			  ,REG_DT AS regDt
+			  ,CONTENTS AS contents
+			  ,FILE_CODE AS fileCode
+		FROM BOARD
+		WHERE POST_NUM = #{postNum}
+	</select>
+	
+	<select id="delete" parameterType="BoardVO" resultType="BoardVO">
+		DELETE FROM BOARD
+		WHERE #{pw} IN (
+			SELECT PW FROM (SELECT b.PW FROM BOARD b WHERE b.POST_NUM = #{postNum})T
+		)
+		AND POST_NUM = #{postNum}
+	</select>
+	
+	<update id="update" parameterType="BoardVO">
+		UPDATE BOARD
+		SET
+			TITLE =  #{title}
+			,PW = #{pw}
+			,USER_ID = #{userId}
+			,CONTENTS = #{contents}
+			,FILE_CODE = #{fileCode}
+		WHERE
+			POST_NUM = #{postNum}
+	</update>
+</mapper>

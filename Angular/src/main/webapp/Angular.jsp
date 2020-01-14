@@ -13,12 +13,12 @@
 </head>
 <body ng-app="one">
 	<h4>앵귤러js</h4>
+	<a href="https://araikuma.tistory.com/471?category=782911">참고2</a>
 	<hr/>
 	
 	<br><h3>기본</h3>
 	<div ng-init="startVal='초기값';addVal='또초기값'">
 		<fieldset>
-
 			<p>ng-init : 초기값설정</p>
 			<p>ng-model : 설정 모델변수</p>
 			<p>ng-bind : 변수불러오기</p>
