@@ -19,7 +19,7 @@
 			<p><a href="filter_repeat.jsp">filter_repeat</a></p>
 			<p><a href="list_repeat.jsp">list_repeat</a></p>
 			<hr>
-			<p><a href="practice_board.jsp">practice_board</a></p>
+			<p><a href="practice_board">practice_board</a></p>
 	</fieldset>
 <script>
 

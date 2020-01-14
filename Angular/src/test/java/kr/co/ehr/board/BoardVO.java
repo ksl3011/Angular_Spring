@@ -9,11 +9,12 @@ public class BoardVO extends DTO {
 	private String regDt;
 	private String fileCode;
 	private String contents;
+	private String cnt;
 	
 	public BoardVO(){}
 	
-	public BoardVO(int postNum, String userId, String title, String pw, String regDt, String fileCode,
-			String contents) {
+	public BoardVO(int postNum, String userId, String title, String pw, String regDt, String fileCode, String contents,
+			String cnt) {
 		super();
 		this.postNum = postNum;
 		this.userId = userId;
@@ -22,6 +23,15 @@ public class BoardVO extends DTO {
 		this.regDt = regDt;
 		this.fileCode = fileCode;
 		this.contents = contents;
+		this.cnt = cnt;
+	}
+
+	public String getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(String cnt) {
+		this.cnt = cnt;
 	}
 
 	public int getPostNum() {
