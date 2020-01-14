@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.ehr.board.BoardDAO;
@@ -15,8 +16,9 @@ import kr.co.ehr.board.SearchVO;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 	private Logger LOG = LoggerFactory.getLogger(this.getClass());
+	@Autowired
 	private SqlSessionTemplate sst;
-	private String NAMESPACE = "ehr.board";
+	private final String NAMESPACE = "ehr.board";
 	
 	@Override
 	public int save(DTO dto) {
@@ -102,7 +104,7 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		SearchVO vo = (SearchVO) dto;
 		String statement = NAMESPACE + ".retrieve";
-		
+
 		List<BoardVO> list = sst.selectList(statement, vo);
 		
 		LOG.debug("===============================================");

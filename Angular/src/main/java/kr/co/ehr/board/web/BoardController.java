@@ -26,6 +26,8 @@ public class BoardController {
 		vo.setPageSize("10");
 		List<BoardVO> list = (List<BoardVO>) ser.retrieve(vo);
 		req.setAttribute("list", list);
+		req.setAttribute("pageNum", 1);
+		req.setAttribute("pageSize", 10);
 		return mainURI;
 	}
 }

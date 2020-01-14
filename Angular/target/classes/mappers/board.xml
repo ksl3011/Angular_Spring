@@ -7,8 +7,8 @@
 	<sql id="search">
 		<where>
 			<choose>
-				<when test='searchWord_a != null and searchWord_a != ""'>
-					TITLE LIKE CONCAT('%', #{searchWord_a}, '%')
+				<when test='searchWord != null and searchWord != ""'>
+					TITLE LIKE CONCAT('%', #{searchWord}, '%')
 					AND <![CDATA[ (@rownum:=0)=0 ]]>
 				</when>
 				<otherwise>
