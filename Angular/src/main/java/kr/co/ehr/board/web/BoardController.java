@@ -46,12 +46,4 @@ public class BoardController {
 		return mainURI;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/practice_board/getList", method = RequestMethod.POST)
-	public String getLista(SearchVO vo) {		
-		List<BoardVO> list = (List<BoardVO>) ser.retrieve(vo);
-		Gson g = new Gson();
-		return g.toJson(list);
-	}
-
 }
