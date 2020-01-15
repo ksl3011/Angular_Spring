@@ -7,4 +7,4 @@ Angular.js 정리
 * controller
 * filter
 * list filter
-* angular 사용 게시판(작업중)
+* angular 사용한 게시판(작업중)
