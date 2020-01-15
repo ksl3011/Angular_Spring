@@ -10,6 +10,7 @@
 	int postPerPage = (request.getAttribute("pageSize")!=null)?(Integer.parseInt((String)request.getAttribute("pageSize"))):10;
 	int pagePerView = 10;
 	String scriptNm = "goPage";
+	String jList = (request.getAttribute("jList")!=null)?(String)request.getAttribute("jList"):"";
 %>
 <!DOCTYPE html>
 <html>
@@ -24,8 +25,8 @@
 	}
 </style>
 </head>
-<body data-ng-data="app">
-<div class="a"><jsp:include page="index.jsp"/></div><div class="b" data-ng-controller="c as c">
+<body data-ng-app="app">
+<div class="a"><jsp:include page="index.jsp"/></div><div class="b">
 
 	<table>
 		<thead>
@@ -60,6 +61,12 @@
 		</tfoot>
 	</table>
 	
+	<br>
+	↑jstl기반
+	<hr>
+	↓앵귤러사용
+	<br>
+	
 	<table>
 		<thead>
 			<tr>
@@ -69,7 +76,7 @@
 				<td width="90" align="center">등록일</td>
 			</tr>	
 		</thead>
-		<tbody>
+		<tbody data-ng-controller="c as c">
 			<tr data-ng-repeat="l in c.list">
 				<td align="center">{{l.postNum}}</td>
 				<td><a href="">{{l.title}}</a></td>
@@ -100,36 +107,11 @@
 		$f.submit();
 	}
 
-	$(function(){
-		getList();
+	var app = angular.module("app", []);
+	app.controller("c", function(){
+		
+		this.list = ${jList};
 	});
-	
-	function getList(){
-		$.ajax({
-			type : "POST",
-			url : "getList",
-			dataType : "json",
-			data : {
-				pageNum : '${pageNum}',
-				pageSize : '${pageSize}'
-			}
-		}).done(function(data){
-			console.log(data);
-			ngStart(data);
-		}).fail(function(){
-			alert("통신실패");
-		}).always(function(){
-		});
-	}
-	
-	function ngStart(data){
-		var app = angular.module("app", []);
-		alert(123);
-		app.controller("c", function(){
-			this.list = data;
-		});
-	}
-	
 </script>
 </body>
 </html>

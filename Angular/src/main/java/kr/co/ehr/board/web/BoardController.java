@@ -40,6 +40,9 @@ public class BoardController {
 		req.setAttribute("list", list);
 		req.setAttribute("pageNum", vo.getPageNum());
 		req.setAttribute("pageSize", vo.getPageSize());
+		
+		Gson g = new Gson();
+		req.setAttribute("jList", g.toJson(list));
 		return mainURI;
 	}
 	
