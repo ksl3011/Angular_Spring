@@ -84,7 +84,10 @@
 			,USER_ID = #{userId}
 			,CONTENTS = #{contents}
 			,FILE_CODE = #{fileCode}
-		WHERE
+		WHERE #{pw} IN (
+			SELECT PW FROM (SELECT b.PW FROM BOARD b WHERE b.POST_NUM = #{postNum})T
+			)
+		AND
 			POST_NUM = #{postNum}
 	</update>
 </mapper>

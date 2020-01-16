@@ -17,13 +17,13 @@
 <div class="a"><jsp:include page="index.jsp"/></div><div class="b">
 	
 	<div data-ng-controller="c as c">
-		
 		<table>
-			<tr><td><label>제목<input type="text" id="title" placeholder="제목"></label></td></tr>
-			<tr><td><label>이름<input type="text" id="userId" placeholder="id"></label></td></tr>
-			<tr><td><label>PW <input type="password" id="pw"></label></td></tr>
-			<tr><td><label>내용<textarea placeholder="내용" id="contents"></textarea></label></td></tr>
+			<tr><td><label>제목<input type="text" id="title" placeholder="제목" value="{{c.u[0].title}}"></label></td></tr>
+			<tr><td><label>이름<input type="text" id="userId" placeholder="id" value="{{c.u[0].userId}}"></label></td></tr>
+			<tr><td><label>PW <input type="password" id="pw" value="{{c.u[0].pw}}"></label></td></tr>
+			<tr><td><label>내용<textarea placeholder="내용" id="contents">{{c.u[0].contents}}</textarea></label></td></tr>
 		</table>
+		<input type="hidden" id="uPostNum" value="{{c.u[0].postNum}}">
 		<button data-ng-click="c.post()">등록</button>
 		<button data-ng-click="c.back()">목록</button>
 	</div>
@@ -35,11 +35,14 @@
 	
 	var app = angular.module("app", []);
 	app.controller("c", function($http){		
+		this.u = [${vo}];
+		
 		this.back = function(){
 			history.back();
 		}
 		
 		this.post = function(){
+			var uPostNum = $("#uPostNum").val();
 			var userId = $("#userId").val();
 			var pw = $("#pw").val();
 			var title = $("#title").val();
@@ -48,25 +51,27 @@
 				alert("미입력");
 				return;
 			}
-			
+			var url = (uPostNum=="")?"post/save":"post/update";
+			var msg = (uPostNum=="")?"등록": "수정";
 			$http({
 				method : "POST",
-				url : "post/save",
+				url : url,
 				data : $.param({
 			    	"userId" : userId,
 			    	"pw" : pw,
 			    	"title" : title, 
-			    	"contents" : contents
+			    	"contents" : contents,
+			    	"postNum" : uPostNum
 			    }),
 			    headers: {
 			        'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
 			    }
 				}).then(function mySuccess(response) {
 					if(response.data == 1) {
-						alert("등록완료");
+						alert(msg + "성공");
 						location.href = "/ehr/practice_board/getList";
 					}else{
-						alert("등록실패");
+						alert(msg + "실패");
 					}
 				}, function myError(response) {
 					alert("error");

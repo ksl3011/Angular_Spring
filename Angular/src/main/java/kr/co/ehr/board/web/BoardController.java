@@ -28,6 +28,7 @@ public class BoardController {
 	private BoardService ser;
 	private String mainURI = "/practice_board";
 	private String contentsURI = "/contents";
+	private String postURI = "/post";
 	
 	@RequestMapping(value = "/practice_board/getList", method = RequestMethod.GET)
 	public String getList(HttpServletRequest req, SearchVO vo) {
@@ -60,24 +61,30 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/practice_board/contents/delete", method = RequestMethod.POST)
 	public int delete(HttpServletRequest req, BoardVO vo) {
-		int flag = ser.delete(vo);		
-		Gson g = new Gson();
+		int flag = ser.delete(vo);
 		return flag;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/practice_board/post/save", method = RequestMethod.POST)
 	public int post(HttpServletRequest req, BoardVO vo) {
-		int flag = ser.save(vo);		
-		Gson g = new Gson();
+		int flag = ser.save(vo);
 		return flag;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/practice_board/contents/update", method = RequestMethod.POST)
-	public int update(HttpServletRequest req, BoardVO vo) {
-		int flag = ser.update(vo);		
+	@RequestMapping(value = "/practice_board/update", method = RequestMethod.POST)
+	public String goUpdate(HttpServletRequest req, BoardVO vo) {
+		BoardVO out = ser.selectOne(vo);
+		
 		Gson g = new Gson();
+		req.setAttribute("vo", g.toJson(out));
+		return postURI;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/practice_board/post/update", method = RequestMethod.POST)
+	public int update(HttpServletRequest req, BoardVO vo) {
+		int flag = ser.update(vo);
 		return flag;
 	}
 }

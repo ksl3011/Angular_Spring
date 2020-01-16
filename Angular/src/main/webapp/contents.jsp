@@ -23,9 +23,14 @@
 		<tfoot>
 			<tr><td><button data-ng-click="c.back()">목록</button></td></tr>
 			<tr><td><button data-ng-click="c.goDelete(c.vo.postNum)">삭제</button></td></tr>
-			
+			<tr><td><button data-ng-click="c.goUpdate(c.vo.postNum)">수정</button></td></tr>
 		</tfoot>		
 	</table>
+	
+	<form action="../update" method="POST" id="goFrm">
+		<input type="hidden" name="postNum" id="uPostNum" value="">
+	</form>
+	
 </div>
 <script src="/ehr/resources/js/jquery-1.12.4.js"></script>
 <script src="/ehr/resources/js/angular.min.js"></script>
@@ -65,6 +70,12 @@
 				}, function myError(response) {
 					alert("error");
 				});
+		}
+		
+		this.goUpdate = function(num){
+		
+			$("#uPostNum").val(num);
+			$("#goFrm").submit();
 		}
 	});
 	
