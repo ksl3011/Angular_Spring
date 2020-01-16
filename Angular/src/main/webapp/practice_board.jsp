@@ -6,7 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	int nowPage = (request.getAttribute("pageNum")!=null)?(Integer.parseInt((String)request.getAttribute("pageNum"))):1;
-	int totalPost = (request.getAttribute("list")!=null)?((List<BoardVO>)request.getAttribute("list")).get(0).getTotal():0;
+	int totalPost = (request.getAttribute("totalPost")!=null)?(Integer)request.getAttribute("totalPost"):1;
 	int postPerPage = (request.getAttribute("pageSize")!=null)?(Integer.parseInt((String)request.getAttribute("pageSize"))):10;
 	int pagePerView = 10;
 	String scriptNm = "goPage";
@@ -28,6 +28,8 @@
 <body data-ng-app="app">
 <div class="a"><jsp:include page="index.jsp"/></div><div class="b">
 
+	<a href="/ehr/post.jsp">글쓰기</a>
+	
 	<table>
 		<thead>
 			<tr>
@@ -43,7 +45,7 @@
 					<c:forEach items="${list}" var="l">
 						<tr>
 							<td align="center">${l.postNum}</td>
-							<td><a href="">${l.title}</a></td>
+							<td><a href="contents/${l.postNum}">${l.title}</a></td>
 							<td align="center">${l.userId}</td>
 							<td>${l.regDt}</td>
 						<tr>
@@ -79,7 +81,7 @@
 		<tbody data-ng-controller="c as c">
 			<tr data-ng-repeat="l in c.list">
 				<td align="center">{{l.postNum}}</td>
-				<td><a href="">{{l.title}}</a></td>
+				<td><a href="" data-ng-click="c.goContents(l.postNum)">{{l.title}}</a></td>
 				<td align="center">{{l.userId}}</td>
 				<td>{{l.regDt}}</td>
 			</tr>
@@ -109,8 +111,10 @@
 
 	var app = angular.module("app", []);
 	app.controller("c", function(){
-		
 		this.list = ${jList};
+		this.goContents = function(num){
+			location.href = "contents/"+num;
+		};
 	});
 </script>
 </body>
