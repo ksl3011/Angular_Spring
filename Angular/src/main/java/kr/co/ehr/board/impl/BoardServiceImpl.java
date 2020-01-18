@@ -41,4 +41,9 @@ public class BoardServiceImpl implements BoardService {
 		return dao.retrieve(dto);
 	}
 
+	@Override
+	public int checkPw(DTO dto) {
+		return dao.checkPw(dto);
+	}
+
 }

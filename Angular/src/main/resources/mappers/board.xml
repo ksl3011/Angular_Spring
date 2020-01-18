@@ -68,6 +68,13 @@
 		WHERE POST_NUM = #{postNum}
 	</select>
 	
+	<select id="checkPw" parameterType="BoardVO" resultType="BoardVO">	
+		SELECT USER_ID AS userId
+		FROM BOARD
+		WHERE POST_NUM = #{postNum}
+		AND PW = #{pw}
+	</select>
+	
 	<select id="delete" parameterType="BoardVO" resultType="BoardVO">
 		DELETE FROM BOARD
 		WHERE #{pw} IN (

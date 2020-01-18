@@ -29,6 +29,7 @@
 	
 	<form action="../update" method="POST" id="goFrm">
 		<input type="hidden" name="postNum" id="uPostNum" value="">
+		<input type="hidden" name="pw" id="uPw" value="">
 	</form>
 	
 </div>
@@ -73,7 +74,12 @@
 		}
 		
 		this.goUpdate = function(num){
-		
+			var pw = prompt("비밀번호 입력");
+			if(pw.length == 0) {
+				alert("비밀번호");
+				return;
+			}
+			$("#uPw").val(pw);
 			$("#uPostNum").val(num);
 			$("#goFrm").submit();
 		}

@@ -1,9 +1,12 @@
 package kr.co.ehr.board.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +76,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/practice_board/update", method = RequestMethod.POST)
-	public String goUpdate(HttpServletRequest req, BoardVO vo) {
+	public String goUpdate(HttpServletRequest req, HttpServletResponse res, BoardVO vo) throws IOException {
+		int flag = ser.checkPw(vo);
+		if(flag == 0) {
+			req.setCharacterEncoding("UTF-8");
+			PrintWriter w = new PrintWriter(res.getWriter());
+			w.print("<script>alert('틀린비밀번호');location.href='/ehr/practice_board/getList';</script>");
+			w.flush();
+			return mainURI;
+		}
+		
 		BoardVO out = ser.selectOne(vo);
 		
 		Gson g = new Gson();

@@ -115,4 +115,23 @@ public class BoardDAOImpl implements BoardDAO {
 		return list;
 	}
 
+	@Override
+	public int checkPw(DTO dto) {
+		LOG.debug("===============================================");
+		LOG.debug("1/2) DAO: checkPw");
+		LOG.debug("===============================================");
+		
+		BoardVO vo = (BoardVO) dto;
+		String statement = NAMESPACE + ".checkPw";
+		
+		BoardVO out = sst.selectOne(statement, vo);
+		int flag = (out==null)?0:1;
+		LOG.debug("===============================================");
+		LOG.debug("2/2) DAO: checkPw");
+		LOG.debug("2/2) flag : " + flag);
+		LOG.debug("===============================================");
+		
+		return flag;
+	}
+
 }

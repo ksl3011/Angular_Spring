@@ -9,5 +9,5 @@ public interface BoardService {
 	public int update(DTO dto);
 	public BoardVO selectOne(DTO dto);
 	public List<?> retrieve(DTO dto);
-	
+	public int checkPw(DTO dto);
 }
